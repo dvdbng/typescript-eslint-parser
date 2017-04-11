@@ -41,7 +41,7 @@ var assert = require("chai").assert,
 // Setup
 //------------------------------------------------------------------------------
 
-var FIXTURES_DIR = "./tests/fixtures/attach-comments";
+var FIXTURES_DIR = "./tests/fixtures/comments";
 
 var testFiles = shelljs.find(FIXTURES_DIR).filter(function(filename) {
     return filename.indexOf(".src.js") > -1;
@@ -53,7 +53,7 @@ var testFiles = shelljs.find(FIXTURES_DIR).filter(function(filename) {
 // Tests
 //------------------------------------------------------------------------------
 
-describe("attachComment: true", function() {
+describe("Comments", function() {
 
     var config;
 
@@ -62,15 +62,17 @@ describe("attachComment: true", function() {
             loc: true,
             range: true,
             tokens: true,
-            attachComment: true,
-            ecmaFeatures: {}
+            comment: true,
+            ecmaFeatures: {
+                jsx: true
+            }
         };
     });
 
     leche.withData(testFiles, function(filename) {
         var code = shelljs.cat(path.resolve(FIXTURES_DIR, filename) + ".src.js");
 
-        it("should produce correct AST when parsed with attachComment", function() {
+        it("should produce correct AST when parsed with comment", function() {
             var expected = require(path.resolve(__dirname, "../../", FIXTURES_DIR, filename) + ".result.js");
             var result;
 
